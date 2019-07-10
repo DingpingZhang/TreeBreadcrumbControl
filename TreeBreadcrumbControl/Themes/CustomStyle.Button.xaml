@@ -94,9 +94,9 @@
                             SnapsToDevicePixels="true">
                         <TextBlock Style="{TemplateBinding Tag}"
                                    FontSize="{TemplateBinding FontSize}"
-                                   Foreground="{TemplateBinding Foreground}" 
+                                   Foreground="{TemplateBinding Foreground}"
                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver"

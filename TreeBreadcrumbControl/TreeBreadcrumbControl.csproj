@@ -74,7 +74,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Themes\DefaultStyle.HideOverflowItemsControl.xaml">
+    <Page Include="Themes\DefaultStyle.CollapseOverflowItemsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -97,8 +97,8 @@
     <Compile Include="Commands\RelayCommandBase.cs" />
     <Compile Include="Commands\RelayCommand{T}.cs" />
     <Compile Include="ControlHelper.cs" />
-    <Compile Include="Controls\HideOverflowItemsControl.cs" />
-    <Compile Include="Controls\HideOverflowItemsPanel.cs" />
+    <Compile Include="Controls\CollapseOverflowItemsControl.cs" />
+    <Compile Include="Controls\CollapseOverflowItemsPanel.cs" />
     <Compile Include="ITreeNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
