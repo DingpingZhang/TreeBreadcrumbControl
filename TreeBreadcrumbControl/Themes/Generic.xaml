@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/TreeBreadcrumbControl;component/Themes/DefaultStyle.TreeBreadcrumbItem.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/TreeBreadcrumbControl;component/Themes/DefaultStyle.HideOverflowItemsControl.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/TreeBreadcrumbControl;component/Themes/DefaultStyle.TreeBreadcrumb.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

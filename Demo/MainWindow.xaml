@@ -1,0 +1,46 @@
+﻿<Window x:Class="Demo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:treeBreadcrumbControl="clr-namespace:TreeBreadcrumbControl;assembly=TreeBreadcrumbControl"
+        xmlns:demo="clr-namespace:Demo"
+        xmlns:markup="clr-namespace:WpfExtensions.Xaml.Markup;assembly=WpfExtensions.Xaml"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        Height="450"
+        Width="800"
+        MinWidth="300"
+        d:DataContext="{d:DesignInstance {x:Type demo:MainWindowViewModel}}">
+
+    <Window.Resources>
+        <ResourceDictionary Source="pack://application:,,,/TreeBreadcrumbControl;component/Themes/Converters.xaml" />
+    </Window.Resources>
+
+    <Grid Margin="20"
+          Focusable="True"
+          MouseDown="UIElement_OnMouseDown"
+          Background="#FFFFFF">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="16" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <treeBreadcrumbControl:TreeBreadcrumb CurrentNode="{Binding CurrentNode}"
+                                              SetCurrentNodeCommand="{Binding Path=SetCurrentNodeCommand}"
+                                              PathSeparator="\" />
+
+        <TextBlock Grid.Row="2"
+                   Text="{Binding ExceptionMessage}"
+                   FontSize="20"
+                   FontWeight="Bold"
+                   Foreground="White"
+                   Background="Red"
+                   HorizontalAlignment="Center"
+                   Visibility="{Binding Path=ExceptionMessage, 
+                                        Converter={markup:Compose {StaticResource IsNullOrEmptyOperator}, 
+                                                                  {StaticResource NotOperator}, 
+                                                                  {StaticResource BooleanToVisibilityConverter}}}" />
+    </Grid>
+</Window>

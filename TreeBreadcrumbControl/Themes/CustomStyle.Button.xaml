@@ -1,0 +1,113 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="ButtonStyle.Transparent"
+           TargetType="ButtonBase">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ButtonBase">
+                    <Border BorderThickness="0"
+                            Background="Transparent"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ButtonStyle.Base"
+           TargetType="ButtonBase">
+        <Setter Property="Cursor"
+                Value="Hand" />
+        <Setter Property="FontSize"
+                Value="14" />
+        <Setter Property="BorderThickness"
+                Value="0" />
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="Foreground"
+                Value="#333333" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
+    </Style>
+
+    <Style x:Key="ButtonStyle.BreadcrumbItem"
+           TargetType="Button"
+           BasedOn="{StaticResource ButtonStyle.Base}">
+        <Setter Property="Height"
+                Value="26" />
+        <Setter Property="Margin"
+                Value="2 0" />
+        <Setter Property="MaxWidth"
+                Value="200" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ButtonBase">
+                    <Border BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}">
+                        <TextBlock x:Name="textBlock"
+                                   DataContext="{TemplateBinding Content}"
+                                   Text="{Binding}"
+                                   TextTrimming="CharacterEllipsis"
+                                   Margin="{TemplateBinding Padding}"
+                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="textBlock"
+                                    Property="TextDecorations"
+                                    Value="Underline" />
+                            <Setter Property="Foreground"
+                                    Value="#0078d7" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ButtonStyle.Iconfont"
+           TargetType="ButtonBase"
+           BasedOn="{StaticResource ButtonStyle.Base}">
+        <Setter Property="Height"
+                Value="26" />
+        <Setter Property="Margin"
+                Value="4 0" />
+        <Setter Property="HorizontalAlignment"
+                Value="Center" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Center" />
+        <Setter Property="FontSize"
+                Value="10" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ButtonBase">
+                    <Border Background="Transparent"
+                            BorderThickness="0"
+                            SnapsToDevicePixels="true">
+                        <TextBlock Style="{TemplateBinding Tag}"
+                                   FontSize="{TemplateBinding FontSize}"
+                                   Foreground="{TemplateBinding Foreground}" 
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter Property="Foreground"
+                                    Value="#0078d7" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
