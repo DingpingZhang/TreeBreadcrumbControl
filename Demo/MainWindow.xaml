@@ -38,6 +38,7 @@
                    Foreground="White"
                    Background="Red"
                    HorizontalAlignment="Center"
+                   TextWrapping="Wrap"
                    Visibility="{Binding Path=ExceptionMessage, 
                                         Converter={markup:Compose {StaticResource IsNullOrEmptyOperator}, 
                                                                   {StaticResource NotOperator}, 
