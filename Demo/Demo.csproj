@@ -60,6 +60,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ExtractContentConverter.cs" />
     <Compile Include="IRefreshable.cs" />
     <Compile Include="LazyObservableTreeNode.cs" />
     <Page Include="MainWindow.xaml">
@@ -71,7 +72,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BindableBase.cs" />
-    <Compile Include="File.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

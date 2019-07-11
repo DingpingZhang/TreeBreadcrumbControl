@@ -83,7 +83,7 @@ namespace TreeBreadcrumbControl
             SetTextModeCommand = new RelayCommand(() =>
             {
                 IsTextMode = true;
-                _textBox.Text = string.Join(PathSeparator, new[] { Root }.Concat(Breadcrumb).Select(item => item.Content));
+                _textBox.Text = string.Join(PathSeparator, new[] { Root }.Concat(Breadcrumb).Select(item => item.ToString()));
                 _textBox.Focus();
                 _textBox.LostKeyboardFocus += TextBoxOnLostKeyboardFocus;
             });

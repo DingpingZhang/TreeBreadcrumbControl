@@ -11,6 +11,15 @@
         <ResourceDictionary Source="pack://application:,,,/TreeBreadcrumbControl;component/Themes/CustomStyle.Popup.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <DataTemplate x:Key="BreadcrumbItemTemplate.PopupItem">
+        <Border Padding="8 3">
+            <TextBlock Text="{Binding}"
+                       TextTrimming="CharacterEllipsis"
+                       VerticalAlignment="Center"
+                       FontSize="14" />
+        </Border>
+    </DataTemplate>
+
     <Style TargetType="{x:Type treeBreadcrumbControl:TreeBreadcrumbItem}">
         <Setter Property="Template">
             <Setter.Value>
@@ -24,7 +33,7 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Button Grid.Column="0"
-                                    Content="{Binding Path=Node.Content, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Content="{Binding Path=Node, RelativeSource={RelativeSource TemplatedParent}}"
                                     Command="{Binding Path=InternalSetCurrentNodeCommand, RelativeSource={RelativeSource TemplatedParent}}"
                                     CommandParameter="{TemplateBinding Node}"
                                     Style="{StaticResource ButtonStyle.BreadcrumbItem}" />
@@ -54,24 +63,9 @@
                                 <Border Style="{StaticResource BorderStyle.PopupContent}">
                                     <Grid>
                                         <ListBox ItemsSource="{Binding Path=Value, Source={StaticResource BindingProxy.Children}}"
-                                                 Style="{StaticResource ListBoxStyle.Base}">
-                                            <ListBox.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Border Padding="8 3"
-                                                            Background="#01FFFFFF">
-                                                        <Border.InputBindings>
-                                                            <MouseBinding MouseAction="LeftClick"
-                                                                          Command="{Binding Path=Value, Source={StaticResource BindingProxy.SetCurrentNodeCommand}}"
-                                                                          CommandParameter="{Binding}" />
-                                                        </Border.InputBindings>
-                                                        <TextBlock Text="{Binding Content}"
-                                                                   TextTrimming="CharacterEllipsis"
-                                                                   VerticalAlignment="Center"
-                                                                   FontSize="14" />
-                                                    </Border>
-                                                </DataTemplate>
-                                            </ListBox.ItemTemplate>
-                                        </ListBox>
+                                                 treeBreadcrumbControl:ControlHelper.RelayCommand="{Binding Path=Value, Source={StaticResource BindingProxy.SetCurrentNodeCommand}}"
+                                                 ItemTemplate="{StaticResource BreadcrumbItemTemplate.PopupItem}"
+                                                 Style="{StaticResource ListBoxStyle.Base}" />
                                     </Grid>
                                 </Border>
                             </Popup>
@@ -136,10 +130,10 @@
                                    Style="{StaticResource PopupStyle.Expand}">
 
                                 <Popup.Resources>
-                                    <treeBreadcrumbControl:BindingProxy x:Key="BindingProxy.OverflowItems"
-                                                                        Value="{Binding Path=OverflowItems, RelativeSource={RelativeSource TemplatedParent}}" />
                                     <treeBreadcrumbControl:BindingProxy x:Key="BindingProxy.Children"
                                                                         Value="{Binding Path=Node.Children, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <treeBreadcrumbControl:BindingProxy x:Key="BindingProxy.OverflowItems"
+                                                                        Value="{Binding Path=OverflowItems, RelativeSource={RelativeSource TemplatedParent}}" />
                                     <treeBreadcrumbControl:BindingProxy x:Key="BindingProxy.SetCurrentNodeCommand"
                                                                         Value="{Binding Path=InternalSetCurrentNodeCommand, RelativeSource={RelativeSource TemplatedParent}}" />
                                 </Popup.Resources>
@@ -149,24 +143,9 @@
                                         <ListBox ItemsSource="{markup:If {Binding Path=Value, Converter={StaticResource AnyOperator}, Source={StaticResource BindingProxy.OverflowItems}},
                                                                          {Binding Path=Value, Converter={StaticResource ReverseOperator}, Source={StaticResource BindingProxy.OverflowItems}},
                                                                          {Binding Path=Value, Source={StaticResource BindingProxy.Children}}}"
-                                                 Style="{StaticResource ListBoxStyle.Base}">
-                                            <ListBox.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Border Padding="8 3"
-                                                            Background="#01FFFFFF">
-                                                        <Border.InputBindings>
-                                                            <MouseBinding MouseAction="LeftClick"
-                                                                          Command="{Binding Path=Value, Source={StaticResource BindingProxy.SetCurrentNodeCommand}}"
-                                                                          CommandParameter="{Binding}" />
-                                                        </Border.InputBindings>
-                                                        <TextBlock Text="{Binding Content}"
-                                                                   TextTrimming="CharacterEllipsis"
-                                                                   VerticalAlignment="Center"
-                                                                   FontSize="14" />
-                                                    </Border>
-                                                </DataTemplate>
-                                            </ListBox.ItemTemplate>
-                                        </ListBox>
+                                                 treeBreadcrumbControl:ControlHelper.RelayCommand="{Binding Path=Value, Source={StaticResource BindingProxy.SetCurrentNodeCommand}}"
+                                                 ItemTemplate="{StaticResource BreadcrumbItemTemplate.PopupItem}"
+                                                 Style="{StaticResource ListBoxStyle.Base}" />
                                     </Grid>
                                 </Border>
                             </Popup>

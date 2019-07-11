@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:treeBreadcrumbControl="clr-namespace:TreeBreadcrumbControl">
 
     <Style x:Key="ListBoxItemStyle.Base"
            TargetType="ListBoxItem">
@@ -31,6 +32,11 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                             Cursor="Hand">
+                        <Border.InputBindings>
+                            <MouseBinding MouseAction="LeftClick"
+                                          Command="{Binding Path=(treeBreadcrumbControl:ControlHelper.RelayCommand), RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                          CommandParameter="{Binding}" />
+                        </Border.InputBindings>
                         <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
                     </Border>

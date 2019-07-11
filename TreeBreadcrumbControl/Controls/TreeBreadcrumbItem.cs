@@ -34,6 +34,8 @@ namespace TreeBreadcrumbControl
             set => SetValue(SetCurrentNodeCommandProperty, value);
         }
 
+        // -------------------------------------------------------------------------------------------------------------------------------
+
         private Popup _popup;
 
         public ICommand InternalSetCurrentNodeCommand { get; }

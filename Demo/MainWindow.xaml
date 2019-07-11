@@ -6,6 +6,7 @@
         xmlns:treeBreadcrumbControl="clr-namespace:TreeBreadcrumbControl;assembly=TreeBreadcrumbControl"
         xmlns:demo="clr-namespace:Demo"
         xmlns:markup="clr-namespace:WpfExtensions.Xaml.Markup;assembly=WpfExtensions.Xaml"
+        xmlns:io="clr-namespace:System.IO;assembly=mscorlib"
         mc:Ignorable="d"
         Title="MainWindow"
         Height="450"
@@ -14,7 +15,14 @@
         d:DataContext="{d:DesignInstance {x:Type demo:MainWindowViewModel}}">
 
     <Window.Resources>
-        <ResourceDictionary Source="pack://application:,,,/TreeBreadcrumbControl;component/Themes/Converters.xaml" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/TreeBreadcrumbControl;component/Themes/Converters.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/TreeBreadcrumbControl;component/Themes/CustomStyle.ListBox.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <demo:ExtractContentConverter x:Key="ExtractContentConverter" />
+        </ResourceDictionary>
     </Window.Resources>
 
     <Grid Margin="20"
@@ -25,6 +33,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="16" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="16" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <treeBreadcrumbControl:TreeBreadcrumb CurrentNode="{Binding CurrentNode}"
@@ -43,5 +52,64 @@
                                         Converter={markup:Compose {StaticResource IsNullOrEmptyOperator}, 
                                                                   {StaticResource NotOperator}, 
                                                                   {StaticResource BooleanToVisibilityConverter}}}" />
+
+        <ListBox Grid.Row="4"
+                 BorderThickness="1"
+                 BorderBrush="#CCCCCC"
+                 Style="{StaticResource ListBoxStyle.Base}">
+            <ListBox.Resources>
+                <treeBreadcrumbControl:BindingProxy x:Key="BindingProxy.DirectoryInfos"
+                                                    Value="{Binding CurrentNode.Children, Converter={StaticResource ExtractContentConverter}}" />
+                <treeBreadcrumbControl:BindingProxy x:Key="BindingProxy.FileInfos"
+                                                    Value="{Binding FileInfos}" />
+            </ListBox.Resources>
+
+            <ListBox.ItemsSource>
+                <CompositeCollection>
+                    <CollectionContainer Collection="{Binding Path=Value, Source={StaticResource BindingProxy.DirectoryInfos}}" />
+                    <CollectionContainer Collection="{Binding Path=Value, Source={StaticResource BindingProxy.FileInfos}}" />
+                </CompositeCollection>
+            </ListBox.ItemsSource>
+
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type io:FileSystemInfo}">
+                    <Border Height="28"
+                            Padding="16 0"
+                            Background="#01FFFFFF">
+                        <Border.InputBindings>
+                            <MouseBinding MouseAction="LeftClick"
+                                          Command="{Binding Path=DataContext.OpenDirectoryCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                          CommandParameter="{Binding}" />
+                        </Border.InputBindings>
+                        <Grid>
+                            <Grid.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextTrimming"
+                                            Value="CharacterEllipsis" />
+                                    <Setter Property="Foreground"
+                                            Value="#505050" />
+                                    <Setter Property="VerticalAlignment"
+                                            Value="Center" />
+                                </Style>
+                            </Grid.Resources>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="16" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="16" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0"
+                                       Text="{Binding Name}" />
+                            <TextBlock Grid.Column="2"
+                                       Text="{Binding Attributes}" />
+                            <TextBlock Grid.Column="4"
+                                       Text="{Binding LastWriteTime}" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>

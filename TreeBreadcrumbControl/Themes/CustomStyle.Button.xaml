@@ -33,6 +33,25 @@
                 Value="Center" />
     </Style>
 
+    <Style x:Key="TextBlockStyle.LinkButton"
+           TargetType="TextBlock">
+        <Setter Property="FontFamily"
+                Value="Microsoft Yahei Regular" />
+        <Setter Property="TextOptions.TextRenderingMode"
+                Value="ClearType" />
+        <Setter Property="TextOptions.TextFormattingMode"
+                Value="Display" />
+        <Setter Property="TextTrimming"
+                Value="CharacterEllipsis" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource AncestorType=Button, AncestorLevel=1}}"
+                         Value="True">
+                <Setter Property="TextDecorations"
+                        Value="Underline" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
     <Style x:Key="ButtonStyle.BreadcrumbItem"
            TargetType="Button"
            BasedOn="{StaticResource ButtonStyle.Base}">
@@ -44,28 +63,29 @@
                 Value="200" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ButtonBase">
-                    <Border BorderThickness="{TemplateBinding BorderThickness}"
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border Name="Chrome"
                             Background="{TemplateBinding Background}"
-                            VerticalAlignment="{TemplateBinding VerticalAlignment}"
-                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}">
-                        <TextBlock x:Name="textBlock"
-                                   DataContext="{TemplateBinding Content}"
-                                   Text="{Binding}"
-                                   TextTrimming="CharacterEllipsis"
-                                   Margin="{TemplateBinding Padding}"
-                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            SnapsToDevicePixels="true">
+                        <ContentPresenter Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <ContentPresenter.Resources>
+                                <Style TargetType="TextBlock"
+                                       BasedOn="{StaticResource TextBlockStyle.LinkButton}" />
+                            </ContentPresenter.Resources>
+                        </ContentPresenter>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver"
                                  Value="True">
-                            <Setter TargetName="textBlock"
-                                    Property="TextDecorations"
-                                    Value="Underline" />
                             <Setter Property="Foreground"
-                                    Value="#0078d7" />
+                                    Value="#007acc" />
+                            <Setter Property="Cursor"
+                                    Value="Hand" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

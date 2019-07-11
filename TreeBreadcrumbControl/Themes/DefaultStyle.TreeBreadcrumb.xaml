@@ -58,7 +58,8 @@
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
                                                 <treeBreadcrumb:TreeBreadcrumbItem Node="{Binding}"
-                                                                                   SetCurrentNodeCommand="{Binding Path=SetCurrentNodeCommand, RelativeSource={RelativeSource AncestorType=treeBreadcrumb:TreeBreadcrumb}}" />
+                                                                                   SetCurrentNodeCommand="{Binding Path=SetCurrentNodeCommand, 
+                                                                                                                   RelativeSource={RelativeSource AncestorType=treeBreadcrumb:TreeBreadcrumb}}" />
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </treeBreadcrumb:CollapseOverflowItemsControl>
@@ -75,7 +76,6 @@
                                                               Converter={StaticResource BooleanToVisibilityConverter}, 
                                                               RelativeSource={RelativeSource TemplatedParent}}" />
                             </Grid>
-
                         </Grid>
                     </Border>
                 </ControlTemplate>

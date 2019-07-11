@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,21 +11,25 @@ namespace Demo
 {
     public class MainWindowViewModel : BindableBase
     {
-        private ITreeNode<object> _currentNode;
-        private ICommand _setCurrentNodeCommand;
+        private ITreeNode<DirectoryInfo> _currentNode;
+        private IEnumerable<FileInfo> _fileInfos;
         private string _exceptionMessage;
 
-        public ITreeNode<object> CurrentNode
+        public ITreeNode<DirectoryInfo> CurrentNode
         {
             get => _currentNode;
             set => SetProperty(ref _currentNode, value);
         }
 
-        public ICommand SetCurrentNodeCommand
+        public IEnumerable<FileInfo> FileInfos
         {
-            get => _setCurrentNodeCommand;
-            set => SetProperty(ref _setCurrentNodeCommand, value);
+            get => _fileInfos;
+            set => SetProperty(ref _fileInfos, value);
         }
+
+        public ICommand SetCurrentNodeCommand { get; }
+
+        public ICommand OpenDirectoryCommand { get; }
 
         public string ExceptionMessage
         {
@@ -34,10 +39,13 @@ namespace Demo
 
         public MainWindowViewModel()
         {
-            SetCurrentNodeCommand = new RelayCommand<LazyObservableTreeNode<File>>(async node =>
+            SetCurrentNodeCommand = new RelayCommand<LazyObservableTreeNode<DirectoryInfo>>(
+                async node => await SetCurrentNodeAsync(node));
+
+            OpenDirectoryCommand = new RelayCommand<DirectoryInfo>(async info =>
             {
-                CurrentNode = node;
-                await node.RefreshAsync();
+                var node = (LazyObservableTreeNode<DirectoryInfo>)CurrentNode.Children.First(item => item.Content == info);
+                await SetCurrentNodeAsync(node);
             });
 
 #pragma warning disable 4014
@@ -47,22 +55,26 @@ namespace Demo
 
         private async Task InitializeCurrentNodeAsync()
         {
-            var rootNode = new LazyObservableTreeNode<File>(new File { Path = @"C:\" })
+            var rootNode = new LazyObservableTreeNode<DirectoryInfo>(new DirectoryInfo(@"C:\"))
             {
-                ChildrenProvider = node => Task.Run(() =>
+                ChildrenProvider = content => Task.Run(() =>
                 {
                     try
                     {
-                        var result = Directory.GetDirectories(node.Path).Select(path => new File { Path = path });
-                        ExceptionMessage = null;
-                        return result;
+                        if (content is DirectoryInfo directoryInfo)
+                        {
+                            return Directory.GetDirectories(directoryInfo.FullName)
+                                .Select(item => new DirectoryInfo(item));
+                        }
                     }
                     catch (Exception e)
                     {
                         ExceptionMessage = e.Message;
-                        return null;
                     }
-                })
+
+                    return null;
+                }),
+                StringFormat = content => content.Name.Replace("\\", "").Replace("/", "")
             };
 
             await rootNode.RefreshAsync();
@@ -70,6 +82,24 @@ namespace Demo
             CurrentNode = rootNode.Children[0];
 
             await ((IRefreshable)CurrentNode).RefreshAsync();
+        }
+
+        private async Task SetCurrentNodeAsync(LazyObservableTreeNode<DirectoryInfo> node)
+        {
+            ExceptionMessage = null;
+            CurrentNode = node;
+            await node.RefreshAsync();
+
+            try
+            {
+                FileInfos = Directory.GetFiles(node.Content.FullName)
+                    .Select(item => new FileInfo(item));
+            }
+            catch (Exception e)
+            {
+                ExceptionMessage = e.Message;
+                FileInfos = null;
+            }
         }
     }
 }

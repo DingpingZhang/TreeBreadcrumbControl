@@ -10,6 +10,7 @@ namespace Demo
     {
         private bool _isRefreshing;
         private Func<T, Task<IEnumerable<T>>> _childrenProvider;
+        private Func<T, string> _stringFormat;
         private IReadOnlyList<ITreeNode<T>> _children;
 
         public LazyObservableTreeNode(T content) => Content = content;
@@ -18,6 +19,12 @@ namespace Demo
         {
             get => _childrenProvider ?? (_childrenProvider = ((LazyObservableTreeNode<T>)Parent)?.ChildrenProvider);
             set => _childrenProvider = value;
+        }
+
+        public Func<T, string> StringFormat
+        {
+            get => _stringFormat ?? (_stringFormat = ((LazyObservableTreeNode<T>)Parent).StringFormat);
+            set => _stringFormat = value;
         }
 
         public T Content { get; }
@@ -62,7 +69,7 @@ namespace Demo
             return false;
         }
 
-        public override string ToString() => Content.ToString();
+        public override string ToString() => StringFormat?.Invoke(Content) ?? Content.ToString();
     }
 
 }
