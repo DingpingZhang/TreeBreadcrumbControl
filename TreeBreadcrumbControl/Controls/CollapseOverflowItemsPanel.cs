@@ -120,18 +120,14 @@ namespace TreeBreadcrumbControl
 
             if (Reserve)
             {
-                var visibleChildren = generatedChildren.Skip(overflowCount).ToArray();
-                var overflowItems = Enumerable.Range(0, overflowCount)
-                    .Select(index => generator.Items[index])
-                    .ToList();
+                var visibleChildren = generatedChildren.Skip(overflowCount).ToList();
+                var overflowItems = generator.Items.Take(overflowCount).ToList();
                 return (visibleChildren, overflowItems);
             }
             else
             {
-                var visibleChildren = generatedChildren.Take(visibleCount).ToArray();
-                var overflowItems = Enumerable.Range(visibleCount, overflowCount)
-                    .Select(index => generator.Items[index])
-                    .ToList();
+                var visibleChildren = generatedChildren.Take(visibleCount).ToList();
+                var overflowItems = generator.Items.Skip(visibleCount).ToList();
                 return (visibleChildren, overflowItems);
             }
         }

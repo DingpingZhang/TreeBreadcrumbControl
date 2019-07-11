@@ -74,7 +74,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Themes\DefaultStyle.CollapseOverflowItemsControl.xaml">
+    <Page Include="Themes\DefaultStyle.TreeBreadcrumbItemsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -97,7 +97,7 @@
     <Compile Include="Commands\RelayCommandBase.cs" />
     <Compile Include="Commands\RelayCommand{T}.cs" />
     <Compile Include="ControlHelper.cs" />
-    <Compile Include="Controls\CollapseOverflowItemsControl.cs" />
+    <Compile Include="Controls\TreeBreadcrumbItemsControl.cs" />
     <Compile Include="Controls\CollapseOverflowItemsPanel.cs" />
     <Compile Include="ITreeNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

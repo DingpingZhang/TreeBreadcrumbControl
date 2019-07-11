@@ -6,12 +6,12 @@ using System.Windows.Data;
 namespace TreeBreadcrumbControl
 {
     [TemplatePart(Name = CollapseOverflowItemsPanelName, Type = typeof(CollapseOverflowItemsPanel))]
-    public class CollapseOverflowItemsControl : ItemsControl
+    public class TreeBreadcrumbItemsControl : ItemsControl
     {
         private const string CollapseOverflowItemsPanelName = "PART_CollapseOverflowItemsPanel";
 
         public static readonly DependencyProperty OverflowItemsProperty = DependencyProperty.Register(
-            "OverflowItems", typeof(IReadOnlyList<object>), typeof(CollapseOverflowItemsControl), new PropertyMetadata(null));
+            "OverflowItems", typeof(IReadOnlyList<object>), typeof(TreeBreadcrumbItemsControl), new PropertyMetadata(null));
 
         public IReadOnlyList<object> OverflowItems => (IReadOnlyList<object>)GetValue(OverflowItemsProperty);
 
@@ -27,9 +27,9 @@ namespace TreeBreadcrumbControl
             base.OnApplyTemplate();
         }
 
-        static CollapseOverflowItemsControl()
+        static TreeBreadcrumbItemsControl()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(CollapseOverflowItemsControl), new FrameworkPropertyMetadata(typeof(CollapseOverflowItemsControl)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(TreeBreadcrumbItemsControl), new FrameworkPropertyMetadata(typeof(TreeBreadcrumbItemsControl)));
         }
     }
 }

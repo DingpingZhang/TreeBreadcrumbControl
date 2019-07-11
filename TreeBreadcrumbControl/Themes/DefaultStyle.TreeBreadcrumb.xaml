@@ -35,7 +35,7 @@
 
                             <!--Home Area-->
                             <treeBreadcrumb:TreeBreadcrumbRootItem Node="{Binding Path=Root, RelativeSource={RelativeSource TemplatedParent}}"
-                                                                   OverflowItems="{Binding Path=OverflowItems, ElementName=CollapseOverflowItemsControl}"
+                                                                   OverflowItems="{Binding Path=OverflowItems, ElementName=TreeBreadcrumbItemsControl}"
                                                                    SetCurrentNodeCommand="{Binding Path=SetCurrentNodeCommand, RelativeSource={RelativeSource TemplatedParent}}"
                                                                    IsTextMode="{Binding Path=IsTextMode, RelativeSource={RelativeSource TemplatedParent}}"
                                                                    SetTextModeCommand="{Binding Path=SetTextModeCommand, RelativeSource={RelativeSource TemplatedParent}}" />
@@ -49,12 +49,12 @@
                                             Command="{Binding Path=SetTextModeCommand, RelativeSource={RelativeSource TemplatedParent}}"
                                             Style="{StaticResource ButtonStyle.Transparent}" />
 
-                                    <treeBreadcrumb:CollapseOverflowItemsControl x:Name="CollapseOverflowItemsControl"
-                                                                                 ItemsSource="{Binding Path=Breadcrumb, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                                                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                                                                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                                                                 HorizontalAlignment="Left"
-                                                                                 VerticalAlignment="Center">
+                                    <treeBreadcrumb:TreeBreadcrumbItemsControl x:Name="TreeBreadcrumbItemsControl"
+                                                                               ItemsSource="{Binding Path=Breadcrumb, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                                               ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                                                               HorizontalAlignment="Left"
+                                                                               VerticalAlignment="Center">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
                                                 <treeBreadcrumb:TreeBreadcrumbItem Node="{Binding}"
@@ -62,7 +62,7 @@
                                                                                                                    RelativeSource={RelativeSource AncestorType=treeBreadcrumb:TreeBreadcrumb}}" />
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
-                                    </treeBreadcrumb:CollapseOverflowItemsControl>
+                                    </treeBreadcrumb:TreeBreadcrumbItemsControl>
                                 </Grid>
 
                                 <!--Text mode content-->
