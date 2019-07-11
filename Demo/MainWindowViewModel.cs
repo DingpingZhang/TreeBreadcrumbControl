@@ -79,7 +79,7 @@ namespace Demo
 
             await rootNode.RefreshAsync();
 
-            CurrentNode = rootNode.Children[0];
+            CurrentNode = rootNode;
 
             await ((IRefreshable)CurrentNode).RefreshAsync();
         }

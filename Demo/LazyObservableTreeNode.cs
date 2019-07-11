@@ -11,7 +11,7 @@ namespace Demo
         private bool _isRefreshing;
         private Func<T, Task<IEnumerable<T>>> _childrenProvider;
         private Func<T, string> _stringFormat;
-        private IReadOnlyList<ITreeNode<T>> _children;
+        private IEnumerable<ITreeNode<T>> _children;
 
         public LazyObservableTreeNode(T content) => Content = content;
 
@@ -31,7 +31,7 @@ namespace Demo
 
         public virtual ITreeNode<T> Parent { get; protected set; }
 
-        public virtual IReadOnlyList<ITreeNode<T>> Children
+        public virtual IEnumerable<ITreeNode<T>> Children
         {
             get => _children;
             protected set => SetProperty(ref _children, value);

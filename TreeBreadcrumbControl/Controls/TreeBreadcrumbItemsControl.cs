@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -11,9 +11,9 @@ namespace TreeBreadcrumbControl
         private const string CollapseOverflowItemsPanelName = "PART_CollapseOverflowItemsPanel";
 
         public static readonly DependencyProperty OverflowItemsProperty = DependencyProperty.Register(
-            "OverflowItems", typeof(IReadOnlyList<object>), typeof(TreeBreadcrumbItemsControl), new PropertyMetadata(null));
+            "OverflowItems", typeof(IEnumerable), typeof(TreeBreadcrumbItemsControl), new PropertyMetadata(null));
 
-        public IReadOnlyList<object> OverflowItems => (IReadOnlyList<object>)GetValue(OverflowItemsProperty);
+        public IEnumerable OverflowItems => (IEnumerable)GetValue(OverflowItemsProperty);
 
         public override void OnApplyTemplate()
         {

@@ -8,6 +8,6 @@ namespace TreeBreadcrumbControl
 
         ITreeNode<T> Parent { get; }
 
-        IReadOnlyList<ITreeNode<T>> Children { get; }
+        IEnumerable<ITreeNode<T>> Children { get; }
     }
 }

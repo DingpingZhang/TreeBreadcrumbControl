@@ -11,7 +11,7 @@ namespace TreeBreadcrumbControl
     public class CollapseOverflowItemsPanel : VirtualizingPanel
     {
         public static readonly DependencyProperty OverflowItemsProperty = DependencyProperty.Register(
-            "OverflowItems", typeof(IReadOnlyList<object>), typeof(CollapseOverflowItemsPanel), new PropertyMetadata(null));
+            "OverflowItems", typeof(IEnumerable), typeof(CollapseOverflowItemsPanel), new PropertyMetadata(null));
         public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(
             "Orientation", typeof(Orientation), typeof(CollapseOverflowItemsPanel), new FrameworkPropertyMetadata(
                 Orientation.Horizontal, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
@@ -19,9 +19,9 @@ namespace TreeBreadcrumbControl
             "Reserve", typeof(bool), typeof(CollapseOverflowItemsPanel), new FrameworkPropertyMetadata(
                 false, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 
-        public IReadOnlyList<object> OverflowItems
+        public IEnumerable OverflowItems
         {
-            get => (IReadOnlyList<object>)GetValue(OverflowItemsProperty);
+            get => (IEnumerable)GetValue(OverflowItemsProperty);
             private set => SetValue(OverflowItemsProperty, value);
         }
 
@@ -39,7 +39,7 @@ namespace TreeBreadcrumbControl
 
         public CollapseOverflowItemsPanel()
         {
-            OverflowItems = new List<object>().AsReadOnly();
+            OverflowItems = Enumerable.Empty<object>();
         }
 
         protected override Size MeasureOverride(Size availableSize)
@@ -58,9 +58,9 @@ namespace TreeBreadcrumbControl
                 }
             }
 
-            if (!EqualsList(OverflowItems, overflowItems))
+            if (!EqualsList((IList)OverflowItems, overflowItems))
             {
-                OverflowItems = overflowItems.AsReadOnly();
+                OverflowItems = overflowItems;
             }
 
             return measuredSize;
@@ -113,26 +113,26 @@ namespace TreeBreadcrumbControl
             return count;
         }
 
-        private (IReadOnlyList<UIElement> visibleChildren, List<object> overflowItems) SeparateItems(IReadOnlyCollection<UIElement> generatedChildren, int visibleCount)
+        private (UIElement[] visibleChildren, object[] overflowItems) SeparateItems(IReadOnlyCollection<UIElement> generatedChildren, int visibleCount)
         {
             var generator = (ItemContainerGenerator)ItemContainerGenerator;
             var overflowCount = generatedChildren.Count - visibleCount;
 
             if (Reserve)
             {
-                var visibleChildren = generatedChildren.Skip(overflowCount).ToList();
-                var overflowItems = generator.Items.Take(overflowCount).ToList();
+                var visibleChildren = generatedChildren.Skip(overflowCount).ToArray();
+                var overflowItems = generator.Items.Take(overflowCount).ToArray();
                 return (visibleChildren, overflowItems);
             }
             else
             {
-                var visibleChildren = generatedChildren.Take(visibleCount).ToList();
-                var overflowItems = generator.Items.Skip(visibleCount).ToList();
+                var visibleChildren = generatedChildren.Take(visibleCount).ToArray();
+                var overflowItems = generator.Items.Skip(visibleCount).ToArray();
                 return (visibleChildren, overflowItems);
             }
         }
 
-        private IReadOnlyList<UIElement> GetGeneratedChildren()
+        private IReadOnlyCollection<UIElement> GetGeneratedChildren()
         {
             // HACK: Read the InternalChildren property before reading the ItemContainerGenerator property,
             // otherwise, the ItemContainerGenerator property will be null.
@@ -153,12 +153,20 @@ namespace TreeBreadcrumbControl
                 }
             }
 
-            return result.AsReadOnly();
+            return result;
         }
 
-        private static bool EqualsList<T>(IReadOnlyCollection<T> list1, IList list2) =>
-            Equals(list1, list2) ||
-            list1.Count == list2.Count &&
-            !list1.Where((item, i) => !Equals(item, list2[i])).Any();
+        private static bool EqualsList(IList list1, IList list2)
+        {
+            if (Equals(list1, list2)) return true;
+            if (list1.Count != list2.Count) return false;
+
+            for (int i = 0; i < list1.Count; i++)
+            {
+                if (!Equals(list1[i], list2[i])) return false;
+            }
+
+            return true;
+        }
     }
 }
