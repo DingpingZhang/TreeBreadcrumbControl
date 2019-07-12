@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -84,7 +85,11 @@ namespace TreeBreadcrumbControl
             {
                 IsTextMode = true;
                 _textBox.Text = string.Join(PathSeparator, new[] { Root }.Concat(Breadcrumb).Select(item => item.ToString()));
-                _textBox.Focus();
+                if (!_textBox.Focus())
+                {
+                    throw new InvalidOperationException(
+                        "The focus of the TextBox setting operation should not fail, please check the custom template.");
+                }
                 _textBox.LostKeyboardFocus += TextBoxOnLostKeyboardFocus;
             });
         }

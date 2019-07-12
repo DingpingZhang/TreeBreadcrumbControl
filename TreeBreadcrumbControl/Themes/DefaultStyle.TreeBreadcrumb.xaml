@@ -37,8 +37,7 @@
                             <treeBreadcrumb:TreeBreadcrumbRootItem Node="{Binding Path=Root, RelativeSource={RelativeSource TemplatedParent}}"
                                                                    OverflowItems="{Binding Path=OverflowItems, ElementName=TreeBreadcrumbItemsControl}"
                                                                    SetCurrentNodeCommand="{Binding Path=SetCurrentNodeCommand, RelativeSource={RelativeSource TemplatedParent}}"
-                                                                   IsTextMode="{Binding Path=IsTextMode, RelativeSource={RelativeSource TemplatedParent}}"
-                                                                   SetTextModeCommand="{Binding Path=SetTextModeCommand, RelativeSource={RelativeSource TemplatedParent}}" />
+                                                                   IsTextMode="{Binding Path=IsTextMode, RelativeSource={RelativeSource TemplatedParent}}" />
                             <!--Items Area-->
                             <Grid Grid.Column="1">
                                 <!--Default mode content-->

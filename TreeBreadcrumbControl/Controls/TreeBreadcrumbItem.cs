@@ -62,8 +62,6 @@ namespace TreeBreadcrumbControl
             "OverflowItems", typeof(IEnumerable), typeof(TreeBreadcrumbRootItem), new PropertyMetadata(default(IEnumerable)));
         public static readonly DependencyProperty IsTextModeProperty = DependencyProperty.Register(
             "IsTextMode", typeof(bool), typeof(TreeBreadcrumbRootItem), new PropertyMetadata(default(bool)));
-        public static readonly DependencyProperty SetTextModeCommandProperty = DependencyProperty.Register(
-            "SetTextModeCommand", typeof(ICommand), typeof(TreeBreadcrumbRootItem), new PropertyMetadata(default(ICommand)));
 
         public IEnumerable OverflowItems
         {
@@ -75,12 +73,6 @@ namespace TreeBreadcrumbControl
         {
             get => (bool)GetValue(IsTextModeProperty);
             set => SetValue(IsTextModeProperty, value);
-        }
-
-        public ICommand SetTextModeCommand
-        {
-            get => (ICommand)GetValue(SetTextModeCommandProperty);
-            set => SetValue(SetTextModeCommandProperty, value);
         }
 
         static TreeBreadcrumbRootItem()

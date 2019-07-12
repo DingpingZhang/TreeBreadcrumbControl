@@ -89,10 +89,11 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Button Grid.Column="0"
-                                    Command="{Binding Path=SetTextModeCommand, RelativeSource={RelativeSource TemplatedParent}}"
-                                    Style="{StaticResource ButtonStyle.Iconfont}"
+                                    Command="{Binding Path=InternalSetCurrentNodeCommand, RelativeSource={RelativeSource TemplatedParent}}"
+                                    CommandParameter="{TemplateBinding Node}"
                                     FontSize="14"
-                                    Tag="{StaticResource Iconfont.Home}" />
+                                    Tag="{StaticResource Iconfont.Home}"
+                                    Style="{StaticResource ButtonStyle.Iconfont}" />
                             <ToggleButton x:Name="ExpandButton"
                                           Grid.Column="1">
                                 <ToggleButton.Style>
