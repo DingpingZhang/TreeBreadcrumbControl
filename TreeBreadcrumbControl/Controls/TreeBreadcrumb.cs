@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using TreeBreadcrumbControl.Commands;
 
@@ -84,13 +86,17 @@ namespace TreeBreadcrumbControl
             SetTextModeCommand = new RelayCommand(() =>
             {
                 IsTextMode = true;
-                _textBox.Text = string.Join(PathSeparator, new[] { Root }.Concat(Breadcrumb).Select(item => item.ToString()));
-                if (!_textBox.Focus())
+
+                _textBox.ExecuteAfterLoaded(@this =>
                 {
-                    throw new InvalidOperationException(
-                        "The focus of the TextBox setting operation should not fail, please check the custom template.");
-                }
-                _textBox.LostKeyboardFocus += TextBoxOnLostKeyboardFocus;
+                    @this.Text = string.Join(PathSeparator, new[] { Root }.Concat(Breadcrumb).Select(item => item.ToString()));
+                    if (!@this.Focus())
+                    {
+                        throw new InvalidOperationException(
+                            "The focus of the TextBox setting operation should not fail, please check the custom template.");
+                    }
+                    @this.LostKeyboardFocus += TextBoxOnLostKeyboardFocus;
+                });
             });
         }
 
@@ -103,8 +109,8 @@ namespace TreeBreadcrumbControl
 
         private void TextBoxOnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            IsTextMode = false;
             _textBox.LostKeyboardFocus -= TextBoxOnLostKeyboardFocus;
+            IsTextMode = false;
         }
 
         private static (ITreeNode<T> Root, IEnumerable<ITreeNode<T>> Breadcrumb) GetAncestors<T>(ITreeNode<T> node)

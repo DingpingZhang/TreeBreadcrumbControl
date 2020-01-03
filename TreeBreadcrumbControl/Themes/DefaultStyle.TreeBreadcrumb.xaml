@@ -40,40 +40,42 @@
                                                                    IsTextMode="{Binding Path=IsTextMode, RelativeSource={RelativeSource TemplatedParent}}" />
                             <!--Items Area-->
                             <Grid Grid.Column="1">
-                                <!--Default mode content-->
-                                <Grid Visibility="{Binding Path=IsTextMode,
-                                                           Converter={markup:Compose {StaticResource NotOperator}, {StaticResource BooleanToVisibilityConverter}}, 
-                                                           RelativeSource={RelativeSource TemplatedParent}}">
-                                    <Button HorizontalAlignment="Stretch"
-                                            Command="{Binding Path=SetTextModeCommand, RelativeSource={RelativeSource TemplatedParent}}"
-                                            Style="{StaticResource ButtonStyle.Transparent}" />
+                                <UserControl>
+                                    <markup:If Condition="{Binding Path=IsTextMode, RelativeSource={RelativeSource TemplatedParent}}">
+                                        <markup:If.True>
+                                            <!--Text mode content-->
+                                            <TextBox Name="PART_TextBox"
+                                                     Foreground="#333333"
+                                                     FontSize="14"
+                                                     VerticalContentAlignment="Center"
+                                                     BorderThickness="0"
+                                                     treeBreadcrumb:ControlHelper.AutoSelectedAll="True" />
+                                        </markup:If.True>
+                                        <markup:If.False>
+                                            <!--Default mode content-->
+                                            <Grid>
+                                                <Button HorizontalAlignment="Stretch"
+                                                        Command="{Binding Path=SetTextModeCommand, RelativeSource={RelativeSource TemplatedParent}}"
+                                                        Style="{StaticResource ButtonStyle.Transparent}" />
 
-                                    <treeBreadcrumb:TreeBreadcrumbItemsControl x:Name="TreeBreadcrumbItemsControl"
-                                                                               ItemsSource="{Binding Path=Breadcrumb, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                                                               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                                                               ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                                                               HorizontalAlignment="Left"
-                                                                               VerticalAlignment="Center">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <treeBreadcrumb:TreeBreadcrumbItem Node="{Binding}"
-                                                                                   SetCurrentNodeCommand="{Binding Path=SetCurrentNodeCommand, 
+                                                <treeBreadcrumb:TreeBreadcrumbItemsControl x:Name="TreeBreadcrumbItemsControl"
+                                                                                           ItemsSource="{Binding Path=Breadcrumb, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                                           ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                                                           ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                                                                           HorizontalAlignment="Left"
+                                                                                           VerticalAlignment="Center">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <treeBreadcrumb:TreeBreadcrumbItem Node="{Binding}"
+                                                                                               SetCurrentNodeCommand="{Binding Path=SetCurrentNodeCommand, 
                                                                                                                    RelativeSource={RelativeSource AncestorType=treeBreadcrumb:TreeBreadcrumb}}" />
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </treeBreadcrumb:TreeBreadcrumbItemsControl>
-                                </Grid>
-
-                                <!--Text mode content-->
-                                <TextBox Name="PART_TextBox"
-                                         Foreground="#333333"
-                                         FontSize="14"
-                                         VerticalContentAlignment="Center"
-                                         BorderThickness="0"
-                                         treeBreadcrumb:ControlHelper.AutoSelectedAll="True"
-                                         Visibility="{Binding Path=IsTextMode, 
-                                                              Converter={StaticResource BooleanToVisibilityConverter}, 
-                                                              RelativeSource={RelativeSource TemplatedParent}}" />
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </treeBreadcrumb:TreeBreadcrumbItemsControl>
+                                            </Grid>
+                                        </markup:If.False>
+                                    </markup:If>
+                                </UserControl>
                             </Grid>
                         </Grid>
                     </Border>
