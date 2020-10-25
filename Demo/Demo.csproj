@@ -16,7 +16,7 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="WpfExtensions.Xaml" Version="1.0.1" />
+    <PackageReference Include="WpfExtensions.Xaml" Version="1.1.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TreeBreadcrumbControl\TreeBreadcrumbControl.csproj" />
