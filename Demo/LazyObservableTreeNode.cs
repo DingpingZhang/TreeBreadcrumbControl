@@ -17,13 +17,13 @@ namespace Demo
 
         public virtual Func<T, Task<IEnumerable<T>>> ChildrenProvider
         {
-            get => _childrenProvider ?? (_childrenProvider = ((LazyObservableTreeNode<T>)Parent)?.ChildrenProvider);
+            get => _childrenProvider ??= ((LazyObservableTreeNode<T>)Parent)?.ChildrenProvider;
             set => _childrenProvider = value;
         }
 
         public Func<T, string> StringFormat
         {
-            get => _stringFormat ?? (_stringFormat = ((LazyObservableTreeNode<T>)Parent).StringFormat);
+            get => _stringFormat ??= ((LazyObservableTreeNode<T>)Parent).StringFormat;
             set => _stringFormat = value;
         }
 

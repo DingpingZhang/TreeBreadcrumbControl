@@ -39,7 +39,7 @@ namespace TreeBreadcrumbControl
 
         public CollapseOverflowItemsPanel()
         {
-            OverflowItems = Enumerable.Empty<object>();
+            OverflowItems = Enumerable.Empty<object>().ToList();
         }
 
         protected override Size MeasureOverride(Size availableSize)
